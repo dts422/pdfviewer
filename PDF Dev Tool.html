@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dev Tool PDF Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        height: 100dvh;
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        background-color: #fff;
+      }
+      .arrow {
+        position: absolute;
+        bottom: 32px;
+        left: 0px;
+        width: 100px;
+        transform: rotate(30deg);
+      }
+      h1 {
+        font-size: 50px;
+      }
+      h1 span {
+        color: #acacac;
+        font-size: 32px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      PDF Dev Tool Viewer
+      <p>
+        <span> Use the Inspect tool for it to work</span>
+    </h1>
+    
+        <!--PDF DEV TOOL-->
+        <div class="mt-6">
+      <h2 class="text-lg font-bold mb-2">PDF Coordinate Finder (Developer Tool)</h2>
+      <div style="position: relative; width: 612px; height: 792px; border: 2px solid #ccc;">
+        <img src="/pdf-overlay.png" style="width: 100%; height: 100%; display: block;" id="pdfOverlayImage">
+        <canvas id="pdfClickCanvas" width="612" height="792" style="position: absolute; top: 0; left: 0;"></canvas>
+      </div>
+        </div>
+
+        <!--Dev Tool PDF Coordinates-->
+    <script>
+      const canvas = document.getElementById("pdfClickCanvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.addEventListener("click", function(e) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = canvas.height - (e.clientY - rect.top); // Flip Y for PDF coords
+
+        console.log(`📍 PDF Coordinates → X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`);
+
+        // Optional: mark dot
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.arc(x, canvas.height - y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+    </script>
+  </body>
+</html>
